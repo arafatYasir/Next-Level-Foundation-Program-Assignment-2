@@ -54,7 +54,7 @@ const Footer = () => {
                     </ul>
 
                     {/* ---- Copyright ---- */}
-                    <p>© {year} MovieBox. All rights reserved.</p>
+                    <p className="text-center">© {year} MovieBox. All rights reserved.</p>
                 </div>
             </Container>
         </footer>
