@@ -17,13 +17,21 @@ const MoviesPage = () => {
       setLoading(true);
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}`);
+        // Determine api endpoint based on searchQuery
+        let API_URL = import.meta.env.VITE_API_BASE_URL;
+
+        if (searchQuery.trim()) {
+          API_URL = `${import.meta.env.VITE_API_SEARCH_URL}?q=${searchQuery}`
+        }
+
+        const res = await fetch(API_URL);
 
         if (!res.ok) {
           throw new Error("Failed to load all movies");
         }
 
         const data = await res.json();
+
         // Set movies to state
         setMovies(data);
       }
@@ -37,7 +45,7 @@ const MoviesPage = () => {
     }
 
     fetchMovies();
-  }, []);
+  }, [searchQuery]);
 
   return (
     <div>
@@ -73,8 +81,8 @@ const MoviesPage = () => {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-5 mt-10 justify-items-center">
                 {
-                  movies.slice(0, limit).map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
+                  movies.slice(0, limit).map((movie, idx) => (
+                    <MovieCard key={idx} movie={movie?.show ?? movie} />
                   ))
                 }
               </div>

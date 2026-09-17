@@ -2,21 +2,33 @@ import StarIcon from "../icons/StarIcon";
 
 const MovieCard = ({ movie }) => {
     const { name, image, language, premiered, rating, genres } = movie;
-
     const releaseYear = new Date(premiered).getFullYear();
     const allGenres = genres.join(", ");
 
     return (
         <div className="w-full max-w-[320px] p-4 rounded-lg bg-[#0f0d23] border border-white/40 space-y-2">
             {/* ---- Poster ---- */}
-            <img
-                src={image.medium}
-                alt={`Poster of ${name}`}
-                width={210}
-                height={295}
-                className="w-full rounded-lg"
-                loading="lazy"
-            />
+            {
+                image ? (
+                    <img
+                        src={image?.medium ?? image.original}
+                        alt={`Poster of ${name}`}
+                        width={210}
+                        height={295}
+                        className="w-full rounded-lg"
+                        loading="lazy"
+                    />
+                ) : (
+                    <img
+                        src="/no_movie.png"
+                        alt={`Poster of ${name}`}
+                        width={210}
+                        height={295}
+                        className="w-full rounded-lg"
+                        loading="lazy"
+                    />
+                )
+            }
 
             {/* ---- Name ---- */}
             <h4 className="text-lg font-bold">{name}</h4>
