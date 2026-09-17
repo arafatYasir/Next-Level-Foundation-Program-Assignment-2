@@ -2,29 +2,51 @@ import { useEffect, useRef, useState } from "react"
 import Container from "../components/Container"
 import SearchIcon from "../icons/SearchIcon";
 import MovieCard from "../components/MovieCard";
+import MoviesSkeleton from "../components/MoviesSkeleton";
 
 const MoviesPage = () => {
   // States
   const [searchQuery, setSearchQuery] = useState("");
+  const [finalQuery, setFinalQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [limit, setLimit] = useState(40);
 
   // Extra hooks
   const timerRef = useRef(null);
 
+  // Scroll to the top of the page on the first render
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  // Set the final search query using debounc technique
+  useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    timerRef.current = setTimeout(() => {
+      setFinalQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timerRef.current);
+  }, [searchQuery]);
+
   // Fetch the movies on first render
   useEffect(() => {
     const fetchMovies = async () => {
+      // Reset states
       setLoading(true);
+      setError("");
 
       try {
-        // Determine api endpoint based on searchQuery
+        // Determine api endpoint based on finalQuery
         let API_URL = import.meta.env.VITE_API_BASE_URL;
 
-        if (searchQuery.trim()) {
-          API_URL = `${import.meta.env.VITE_API_SEARCH_URL}?q=${searchQuery}`
+        if (finalQuery.trim()) {
+          API_URL = `${import.meta.env.VITE_API_SEARCH_URL}?q=${finalQuery}`
         }
 
         const res = await fetch(API_URL);
@@ -44,21 +66,12 @@ const MoviesPage = () => {
       }
       finally {
         setLoading(false);
+        setLimit(40);
       }
     }
 
-    // If any previous timer is running
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    // Set a new timer to start api fetching
-    timerRef.current = setTimeout(() => {
-      fetchMovies();
-    }, 300);
-
-    return () => clearTimeout(timerRef.current);
-  }, [searchQuery]);
+    fetchMovies();
+  }, [finalQuery]);
 
   return (
     <div>
@@ -78,7 +91,7 @@ const MoviesPage = () => {
 
         {/* ---- Loading State ---- */}
         {
-          loading && <p>Loading Movies....</p>
+          loading && <MoviesSkeleton />
         }
 
         {/* ---- Error State ---- */}
@@ -88,9 +101,19 @@ const MoviesPage = () => {
           )
         }
 
+        {/* ---- Empty State ---- */}
+        {
+          (!loading && !error && movies.length === 0) && (
+            <div className="text-center mt-10 space-y-2">
+              <h2 className="text-2xl font-semibold">We couldn't find any movies</h2>
+              <p className="text-lg">It doesn't normally occur. Try refreshing the page or search for something else.</p>
+            </div>
+          )
+        }
+
         {/* ---- All Movies ---- */}
         {
-          (!loading && !error && movies && movies.length > 0) && (
+          (!loading && !error && movies.length > 0) && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-5 mt-10 justify-items-center">
                 {
@@ -114,16 +137,6 @@ const MoviesPage = () => {
                 )
               }
             </>
-          )
-        }
-
-        {/* ---- Empty State ---- */}
-        {
-          (!loading && !error && movies.length === 0) && (
-            <div className="text-center mt-10 space-y-2">
-              <h2 className="text-2xl font-semibold">We couldn't find any movies</h2>
-              <p className="text-lg">It doesn't normally occur. Try refreshing the page or search for something else.</p>
-            </div>
           )
         }
       </Container>
