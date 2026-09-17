@@ -24,7 +24,7 @@ const Hero = () => {
                     </h1>
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center">Explore and discover your favorite movies from around the world.</p>
 
-                    <Link to="/movies" className="bg-[#7f4dff] py-3.5 px-5 text-base sm:text-lg md:text-xl font-semibold">
+                    <Link to="/movies" className="bg-[#7f4dff] hover:bg-[#6e35ff] active:bg-[#6e35ff] py-3.5 px-5 text-base sm:text-lg md:text-xl font-semibold transition-colors duration-100">
                         Explore Now
                     </Link>
                 </div>
