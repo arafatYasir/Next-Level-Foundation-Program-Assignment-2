@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Container from "../components/Container"
 import SearchIcon from "../icons/SearchIcon";
 import MovieCard from "../components/MovieCard";
@@ -10,6 +10,9 @@ const MoviesPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [limit, setLimit] = useState(40);
+
+  // Extra hooks
+  const timerRef = useRef(null);
 
   // Fetch the movies on first render
   useEffect(() => {
@@ -44,7 +47,17 @@ const MoviesPage = () => {
       }
     }
 
-    fetchMovies();
+    // If any previous timer is running
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    // Set a new timer to start api fetching
+    timerRef.current = setTimeout(() => {
+      fetchMovies();
+    }, 300);
+
+    return () => clearTimeout(timerRef.current);
   }, [searchQuery]);
 
   return (
@@ -88,14 +101,18 @@ const MoviesPage = () => {
               </div>
 
               {/* ---- Show More Btn ---- */}
-              <div className="text-center mt-10">
-                <button
-                  className="cursor-pointer border-2 border-[#7f4dff] hover:bg-[#6e35ff] active:bg-[#6e35ff] py-3.5 px-5 text-base sm:text-lg md:text-xl font-semibold transition-colors duration-100"
-                  onClick={() => setLimit(prev => prev + 40)}
-                >
-                  See More
-                </button>
-              </div>
+              {
+                (limit < movies.length) && (
+                  <div className="text-center mt-10">
+                    <button
+                      className="cursor-pointer border-2 border-[#7f4dff] hover:bg-[#6e35ff] active:bg-[#6e35ff] py-3.5 px-5 text-base sm:text-lg md:text-xl font-semibold transition-colors duration-100"
+                      onClick={() => setLimit(prev => prev + 40)}
+                    >
+                      See More
+                    </button>
+                  </div>
+                )
+              }
             </>
           )
         }
