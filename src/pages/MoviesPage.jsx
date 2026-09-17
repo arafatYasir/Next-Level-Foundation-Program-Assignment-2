@@ -69,7 +69,7 @@ const MoviesPage = () => {
 
         {/* ---- All Movies ---- */}
         {
-          (!loading && !error && movies && movies.length > 0) ? (
+          (!loading && !error && movies && movies.length > 0) && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-5 mt-10 justify-items-center">
                 {
@@ -89,7 +89,12 @@ const MoviesPage = () => {
                 </button>
               </div>
             </>
-          ) : (
+          )
+        }
+
+        {/* ---- Empty State ---- */}
+        {
+          (!loading && !error && movies.length === 0) && (
             <div className="text-center mt-10 space-y-2">
               <h2 className="text-2xl font-semibold">We couldn't find any movies</h2>
               <p className="text-lg">It doesn't normally occur. Try refreshing the page or search for something else.</p>
