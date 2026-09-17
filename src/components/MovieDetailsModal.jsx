@@ -69,7 +69,7 @@ const MovieDetailsModal = ({ movie, onClose }) => {
                             <span className="flex items-center gap-x-1">
                                 <StarIcon width={20} height={20} />
                                 <span className="font-bold">
-                                    {rating.average}/10
+                                    {rating.average || "N/A"}
                                 </span>
                             </span>
 
@@ -87,10 +87,14 @@ const MovieDetailsModal = ({ movie, onClose }) => {
                             </span>
                         </p>
 
-                        <div>
-                            <h4 className="text-base sm:text-lg font-bold">Genres</h4>
-                            <p className="text-base sm:text-lg">{allGenres}</p>
-                        </div>
+                        {
+                            allGenres.trim() !== "" && (
+                                <div>
+                                    <h4 className="text-base sm:text-lg font-bold">Genres</h4>
+                                    <p className="text-base sm:text-lg">{allGenres}</p>
+                                </div>
+                            )
+                        }
 
                         <div>
                             <h4 className="text-base sm:text-lg font-bold">Type</h4>

@@ -56,7 +56,7 @@ const MovieCard = ({ movie }) => {
                 <span className="flex items-center gap-x-1">
                     <StarIcon />
                     <span className="font-bold">
-                        {rating.average}
+                        {rating.average || "N/A"}
                     </span>
                 </span>
 
@@ -70,10 +70,14 @@ const MovieCard = ({ movie }) => {
             </p>
 
             {/* ---- Genres ---- */}
-            <p>
-                <span className="font-bold">Genres:</span>
-                <span className="italic"> {allGenres}</span>
-            </p>
+            {
+                allGenres.trim() !== "" && (
+                    <p>
+                        <span className="font-bold">Genres:</span>
+                        <span className="italic"> {allGenres}</span>
+                    </p>
+                )
+            }
 
             {/* ---- Button ---- */}
             <button
