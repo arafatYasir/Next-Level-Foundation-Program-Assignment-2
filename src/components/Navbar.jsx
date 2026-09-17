@@ -3,7 +3,7 @@ import Container from "./Container"
 
 const Navbar = () => {
     return (
-        <header className="sticky top-0 w-full bg-[#4c3f9a]/40 border-b border-b-white/40 backdrop-blur-sm">
+        <header className="sticky top-0 z-999 w-full bg-[#4c3f9a]/40 border-b border-b-white/40 backdrop-blur-sm">
             <Container>
                 <nav className="flex items-center justify-between py-3">
                     {/* ---- Logo ---- */}
