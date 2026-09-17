@@ -9,7 +9,7 @@ const MoviesPage = () => {
   return (
     <div>
       <Container>
-        <h1 className="text-3xl font-bold text-center my-10">All Movies That Matches With Your Interest</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center my-10">All Movies That Matches With Your Interest</h1>
 
         <div className="bg-[#cecefb0d] w-full max-w-[600px] mx-auto relative">
           <input
@@ -17,8 +17,7 @@ const MoviesPage = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search through thousands of movies"
-            className="py-4 px-12 outline-none w-full text-[#d6c7ff] placeholder:text-[#d6c7ff]/70"
-
+            className="py-4 px-12 outline-none w-full text-sm sm:text-base text-[#d6c7ff] placeholder:text-[#d6c7ff]/70"
           />
           <SearchIcon className="absolute top-1/2 -translate-y-1/2 left-6 -translate-x-1/2" />
         </div>
