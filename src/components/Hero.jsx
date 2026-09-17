@@ -10,7 +10,7 @@ const Hero = () => {
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
-            className="h-125 sm:h-175 relative"
+            className="h-125 sm:h-175 relative min-h-screen"
         >
             {/* ---- Overlay ---- */}
             <div className="absolute top-0 left-0 w-full h-full bg-black/60"></div>
