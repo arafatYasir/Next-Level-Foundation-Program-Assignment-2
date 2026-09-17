@@ -117,8 +117,8 @@ const MoviesPage = () => {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-5 mt-10 justify-items-center">
                 {
-                  movies.slice(0, limit).map((movie, idx) => (
-                    <MovieCard key={idx} movie={movie?.show ?? movie} />
+                  movies.slice(0, limit).map((movie) => (
+                    <MovieCard key={movie?.show ? movie.show.id : movie.id} movie={movie?.show ?? movie} />
                   ))
                 }
               </div>

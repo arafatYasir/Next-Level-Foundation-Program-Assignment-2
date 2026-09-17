@@ -8,7 +8,7 @@ const MovieCard = ({ movie }) => {
 
     // Variables
     const { name, image, language, premiered, rating, genres } = movie;
-    const releaseYear = new Date(premiered).getFullYear();
+    const releaseYear = premiered ? new Date(premiered).getFullYear() : "N/A";
     const allGenres = genres.join(", ");
 
     // Stop scroll bar when modal is open
@@ -20,7 +20,7 @@ const MovieCard = ({ movie }) => {
             document.body.style.overflow = "unset";
         }
 
-        return () => document.body.style.overflow = "hidden";
+        return () => document.body.style.overflow = "unset";
     }, [showDetails]);
 
     return (

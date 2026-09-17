@@ -2,13 +2,14 @@ import { useEffect, useRef } from "react";
 import CloseIcon from "../icons/CloseIcon"
 import StarIcon from "../icons/StarIcon";
 import CalendarIcon from "../icons/CalendarIcon"
+import { strip } from "../lib/helpers.js"
 
 const MovieDetailsModal = ({ movie, onClose }) => {
     // Hooks
     const modalRef = useRef(null);
 
     const { name, image, language, premiered, rating, genres, type, summary } = movie;
-    const releaseYear = new Date(premiered).getFullYear();
+    const releaseYear = premiered ? new Date(premiered).getFullYear() : "N/A";
     const allGenres = genres.join(", ");
 
     useEffect(() => {
@@ -103,7 +104,7 @@ const MovieDetailsModal = ({ movie, onClose }) => {
 
                         <div>
                             <h4 className="text-base sm:text-lg font-bold">Summary</h4>
-                            <p className="text-base sm:text-lg max-w-[420px]">{summary}</p>
+                            <p className="text-base sm:text-lg max-w-[420px]">{strip(summary)}</p>
                         </div>
                     </div>
                 </div>
