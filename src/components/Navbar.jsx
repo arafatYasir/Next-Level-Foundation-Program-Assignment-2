@@ -19,7 +19,7 @@ const Navbar = () => {
                         <span className="text-xl sm:text-2xl font-bold">MovieBox</span>
                     </NavLink>
 
-                    <Link to="/movies" className="text-lg sm:text-xl hover:text-[#ab8bff] transition-colors duration-100">All Movies</Link>
+                    <Link to="/movies" className="text-lg sm:text-xl hover:text-[#ab8bff] active:text-[#ab8bff] transition-colors duration-100">All Movies</Link>
                 </nav>
             </Container>
         </header>
